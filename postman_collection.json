@@ -1,0 +1,182 @@
+{
+  "info": {
+    "name": "Session Booking Backend API",
+    "description": "Postman collection for testing the Session Booking backend assignment APIs",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000",
+      "type": "string"
+    },
+    {
+      "key": "teacherId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "userId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "sessionId",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Teachers",
+      "item": [
+        {
+          "name": "Create Teacher (Helper)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullName\": \"John Doe\",\n  \"email\": \"john.doe@example.com\",\n  \"specialization\": \"Mathematics\",\n  \"experience\": 5\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/teachers",
+              "host": ["{{baseUrl}}"],
+              "path": ["teachers"]
+            }
+          }
+        },
+        {
+          "name": "Get All Teachers",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/teachers",
+              "host": ["{{baseUrl}}"],
+              "path": ["teachers"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "API 1 - Create User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullName\": \"Jane Smith\",\n  \"email\": \"jane.smith@example.com\",\n  \"phone\": \"+1234567890\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users",
+              "host": ["{{baseUrl}}"],
+              "path": ["users"]
+            }
+          }
+        },
+        {
+          "name": "API 6 - Get User Sessions (Aggregation)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/users/{{userId}}/sessions",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "{{userId}}", "sessions"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Sessions",
+      "item": [
+        {
+          "name": "API 2 - Create Session",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"teacherId\": \"{{teacherId}}\",\n  \"startTime\": \"2026-12-01T10:00:00.000Z\",\n  \"endTime\": \"2026-12-01T11:00:00.000Z\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/sessions",
+              "host": ["{{baseUrl}}"],
+              "path": ["sessions"]
+            }
+          }
+        },
+        {
+          "name": "API 3 - Get Available Sessions (Aggregation)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/sessions/available?dateTimestamp=1796121600000",
+              "host": ["{{baseUrl}}"],
+              "path": ["sessions", "available"],
+              "query": [
+                {
+                  "key": "dateTimestamp",
+                  "value": "1796121600000",
+                  "description": "Timestamp in milliseconds for 2026-12-01"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "API 4 - Book Session",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": \"{{userId}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/sessions/{{sessionId}}/book",
+              "host": ["{{baseUrl}}"],
+              "path": ["sessions", "{{sessionId}}", "book"]
+            }
+          }
+        },
+        {
+          "name": "API 5 - Mark Session Complete",
+          "request": {
+            "method": "PATCH",
+            "url": {
+              "raw": "{{baseUrl}}/sessions/{{sessionId}}/complete",
+              "host": ["{{baseUrl}}"],
+              "path": ["sessions", "{{sessionId}}", "complete"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
+
